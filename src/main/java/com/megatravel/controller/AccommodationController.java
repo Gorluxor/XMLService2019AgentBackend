@@ -110,33 +110,6 @@ public class AccommodationController {
         return new ResponseEntity<>(new AccommodationDTO(accommodation),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/zauzeto/{id}", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<ReservationDTO> zauzeto(@RequestBody ReservationDTO reservationDTO, @PathVariable Long id) {
-        Reservation res = reservationService.findById(id);
-
-        if (res==null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        res.setArrivalDate(reservationDTO.getArrivalDate());
-        res.setDepartureDate(reservationDTO.getDepartureDate());
-        res.setReservationPrice(reservationDTO.getReservationPrice());
-        res.setStayRealized(false);
-        res.setUser(new User(reservationDTO.getUserDTO()));
-
-        List<AccommodationUnit>  unit = new ArrayList<>();
-        for(AccommodationUnitDTO e:reservationDTO.getAccommodationUnitDTO())
-        {
-            unit.add(new AccommodationUnit(e));
-        }
-
-        res.setAccommodationUnit(unit);
-
-        res=reservationService.save(res);
-
-        return new ResponseEntity<>(new ReservationDTO(res),HttpStatus.OK);
-
-    }
-
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<AccommodationDTO> updateAccommodation(@RequestBody AccommodationDTO accommodationDTO) {
         return null;
@@ -149,5 +122,14 @@ public class AccommodationController {
 
 
     }
+/*
+    proveri da li je zauzeto
+    repository, unit, type, image location,
+    accodomationUnit Controller
+    pricing controller da cennu jedinicu
+    sve poruke od korisnika
 
+
+
+ */
 }
