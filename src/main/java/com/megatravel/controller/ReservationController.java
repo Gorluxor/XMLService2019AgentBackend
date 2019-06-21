@@ -29,7 +29,7 @@ public class ReservationController {
     @Autowired
     private AccommodationUnitService accommodationUnitService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ReservationDTO>> getAllReservaitons() {
         List<Reservation> accommodations = reservationService.findAll();
         List<ReservationDTO> rentACarDTOS = new ArrayList<>();

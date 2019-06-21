@@ -24,7 +24,7 @@ public class AccommodationUnitController {
     @Autowired
     private AccommodationUnitService accommodationUnitService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<AccommodationUnitDTO>> getAllAccommodationUnits() {
         List<AccommodationUnit> accommodations = accommodationUnitService.findAll();
         List<AccommodationUnitDTO> rentACarDTOS = new ArrayList<>();
@@ -34,6 +34,15 @@ public class AccommodationUnitController {
         }
         return new ResponseEntity<>(rentACarDTOS, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public ResponseEntity<AccommodationUnitDTO> getOne(@PathVariable Long id) {
+
+        AccommodationUnit pricing = accommodationUnitService.findById(id);
+
+        return new ResponseEntity<>(new AccommodationUnitDTO(pricing), HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<AccommodationUnitDTO> getAccommodationUnit(@PathVariable Long id) {
