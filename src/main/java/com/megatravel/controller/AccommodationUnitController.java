@@ -35,14 +35,6 @@ public class AccommodationUnitController {
         return new ResponseEntity<>(rentACarDTOS, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<AccommodationUnitDTO> getOne(@PathVariable Long id) {
-
-        AccommodationUnit pricing = accommodationUnitService.findById(id);
-
-        return new ResponseEntity<>(new AccommodationUnitDTO(pricing), HttpStatus.OK);
-    }
-
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<AccommodationUnitDTO> getAccommodationUnit(@PathVariable Long id) {

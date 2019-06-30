@@ -2,8 +2,12 @@ package com.megatravel.controller;
 
 
 
-import com.megatravel.dtos.*;
-import com.megatravel.model.*;
+import com.megatravel.agent.AccommodationDTO;
+import com.megatravel.agent.AccommodationDTO.AccommodationUnitDTO;
+import com.megatravel.agent.AccommodationDTO.AccommodationUnitDTO.ExtraServiceDTO;
+import com.megatravel.dtos.ToDTO;
+import com.megatravel.model.Accommodation;
+import com.megatravel.reservations.ReservationDTO;
 import com.megatravel.service.AccommodationService;
 import com.megatravel.service.MessageService;
 import com.megatravel.service.ReservationService;
@@ -36,7 +40,7 @@ public class AccommodationController {
         List<AccommodationDTO> rentACarDTOS = new ArrayList<>();
 
         for (Accommodation aCar : accommodations){
-            rentACarDTOS.add(new AccommodationDTO(aCar));
+            rentACarDTOS.add(ToDTO.toAccommodationUnitDTO(aCar));
         }
         return new ResponseEntity<>(rentACarDTOS,HttpStatus.OK);
     }
@@ -78,36 +82,36 @@ public class AccommodationController {
 
         accommodation.setAccommodationUnit(unit);
         accommodation.setAccommodationType(new AccommodationType(accommodationDTO.getAccommodationTypeDTO()));
-        accommodation.setCancelationDays(accommodationDTO.getCancelationDays());
+        //accommodation.setCancelationDays(accommodationDTO.getC); TODO FIX
         accommodation.setDescription(accommodationDTO.getDescription());
 
         List<Image> images = new ArrayList<>();
 
-        for(ImageDTO e: accommodationDTO.getImageDTO())
-        {
-            images.add(new Image(e));
-        }
+//        for(ImageDTO e: accommodationDTO.getImageDTO())
+//        {
+//            images.add(new Image(e));
+//        } TODO FIX
 
 
-        accommodation.setImage(images);
+       // accommodation.setImage(images);
 
         accommodation.setLocation(new Location(accommodationDTO.getLocationDTO()));
 
         accommodation.setName(accommodationDTO.getName());
         accommodation.setUser(new User(accommodationDTO.getUserDTO()));
 
-        List<Service> services = new ArrayList<>();
+        List<ExtraService> services = new ArrayList<>();
 
-        for(ServiceDTO e: accommodationDTO.getServiceDTO())
+        for(Object e: accommodationDTO.getExtraServiceDTO())
         {
-            services.add(new Service(e));
-        }
+            services.add(new ExtraService( (ExtraServiceDTO) e)); //TODO Fix
+        } 
 
-        accommodation.setService(services);
+        accommodation.setExtraService(services);
 
         accommodation = accomodationService.save(accommodation);
 
-        return new ResponseEntity<>(new AccommodationDTO(accommodation),HttpStatus.OK);
+        return new ResponseEntity<>(ToDTO.toAccommodationUnitDTO(accommodation),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")

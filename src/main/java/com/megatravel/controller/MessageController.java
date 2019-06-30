@@ -48,4 +48,14 @@ public class MessageController {
         return new ResponseEntity<>(new MessageDTO(message),HttpStatus.OK);
 
     }
+
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    public String test(){
+
+
+
+
+        return "Done";
+    }
+
 }

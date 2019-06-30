@@ -1,12 +1,10 @@
 package com.megatravel.controller;
 
-import com.megatravel.dtos.AccommodationDTO;
-import com.megatravel.dtos.AccommodationUnitDTO;
-import com.megatravel.dtos.ReservationDTO;
 import com.megatravel.model.Accommodation;
 import com.megatravel.model.AccommodationUnit;
 import com.megatravel.model.Reservation;
 import com.megatravel.model.User;
+import com.megatravel.reservations.ReservationDTO;
 import com.megatravel.service.AccommodationUnitService;
 import com.megatravel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,15 +47,15 @@ public class ReservationController {
 
         AccommodationUnit acc= new AccommodationUnit();
 
-        for(AccommodationUnitDTO e:reservationDTO.getAccommodationUnitDTO())
-        {
-           acc=accommodationUnitService.findById(e.getId());
-
-           if(acc!=null)
-           {
-               units.add(new AccommodationUnit(e));
-           }
-        }
+//        for(AccommodationUnitDTO e:reservationDTO.getAccommodationUnitDTO())
+//        {
+//           acc=accommodationUnitService.findById(e.getId());
+//
+//           if(acc!=null)
+//           {
+//               units.add(new AccommodationUnit(e));
+//           }
+//        }
 
 
 

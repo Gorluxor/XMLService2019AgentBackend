@@ -1,14 +1,28 @@
 package com.megatravel.model;
 
-import com.megatravel.dtos.AccommodationDTO;
-
-import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+//
+//import com.megatravel.dtos.agent.AccommodationDTO;
+//import com.megatravel.model.admin.User;
+//import com.megatravel.model.types.Location;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.megatravel.agent.AccommodationDTO;
+
+
+
 @Entity
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess","Duplicates"})
 public class Accommodation {
 
     @Id
@@ -18,8 +32,6 @@ public class Accommodation {
     protected String name;
 
     protected String description;
-
-    protected BigInteger cancelationDays;
 
     @ManyToOne
     protected Location location;
@@ -33,32 +45,87 @@ public class Accommodation {
     @OneToMany(mappedBy = "accommodation")
     protected List<AccommodationUnit> accommodationUnit = new ArrayList<>();
 
-    @OneToMany(mappedBy = "serviceForAcc")
-    protected List<Service> service = new ArrayList<>();
+    @ManyToMany
+    protected List<ExtraService> extraService = new ArrayList<>();
 
-    @OneToMany(mappedBy = "belongsToAccommodation")
-    protected List<Image> image = new ArrayList<>();
+    protected String category;
+
+    protected boolean freeToCancel;
+
+    protected int freeToCancelDays;
+
+
+    protected Date lastChangedDate;
 
     public Accommodation() {
-        super();
+        this.lastChangedDate = new Date();
     }
 
-    public Accommodation(AccommodationDTO accommodationDTO){
+    public Accommodation(AccommodationDTO accommodationDTO) {
         this.id = accommodationDTO.getId();
         this.name = accommodationDTO.getName();
         this.description = accommodationDTO.getDescription();
-        this.cancelationDays = accommodationDTO.getCancelationDays();
-        this.location = new Location(accommodationDTO.getLocationDTO());
+        //this.location = new Location(accommodationDTO.getLocationDTO());
+        this.lastChangedDate = new Date();
+        this.freeToCancel = accommodationDTO.isFreeToCancel();
+        this.freeToCancelDays = accommodationDTO.getFreeToCancelDays() >= 0 ? accommodationDTO.getFreeToCancelDays() : 0 ;
+        this.category = validCategory(accommodationDTO.getCategory());
+        this.accommodationType = accommodationDTO.getAccommodationTypeDTO() == null ? null : new AccommodationType(accommodationDTO.getAccommodationTypeDTO());
+        this.user = accommodationDTO.getUserDTO() == null ? null : new User(accommodationDTO.getUserDTO());
     }
 
-    public Accommodation(String name, String description, BigInteger cancelationDays) {
-        this.name = name;
-        this.description = description;
-        this.cancelationDays = cancelationDays;
+    public static String validCategory(String value){
+        if (value == null){
+            return "Uncategorized";
+        }
+
+        switch (value){
+            case "One star":
+                return "One star";
+            case "Two star":
+                return "Two star";
+            case "Three star":
+                return "Three star";
+            case "Four star":
+                return "Four star";
+            case "Five star":
+                return "Five star";
+            default:
+                return "Uncategorized";
+        }
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setCategory(String category) {
+        this.category = validCategory(category);
+    }
 
+    public boolean isFreeToCancel() {
+        return freeToCancel;
+    }
+
+    public void setFreeToCancel(boolean freeToCancel) {
+        this.freeToCancel = freeToCancel;
+    }
+
+    public int getFreeToCancelDays() {
+        return freeToCancelDays;
+    }
+
+    public void setFreeToCancelDays(int freeToCancelDays) {
+        this.freeToCancelDays = freeToCancelDays;
+    }
+
+    public Date getLastChangedDate() {
+        return lastChangedDate;
+    }
+
+    public void setLastChangedDate(Date lastChangedDate) {
+        this.lastChangedDate = lastChangedDate;
+    }
 
     public long getId() {
         return id;
@@ -87,16 +154,6 @@ public class Accommodation {
 
     public void setDescription(String value) {
         this.description = value;
-    }
-
-
-    public BigInteger getCancelationDays() {
-        return cancelationDays;
-    }
-
-
-    public void setCancelationDays(BigInteger value) {
-        this.cancelationDays = value;
     }
 
 
@@ -134,13 +191,10 @@ public class Accommodation {
         this.accommodationUnit = accommodationUnit;
     }
 
-    public void setService(List<Service> service) {
-        this.service = service;
+    public void setExtraService(List<ExtraService> extraService) {
+        this.extraService = extraService;
     }
 
-    public void setImage(List<Image> image) {
-        this.image = image;
-    }
 
     public List<AccommodationUnit> getAccommodationUnit() {
         if (accommodationUnit == null) {
@@ -150,19 +204,13 @@ public class Accommodation {
     }
 
 
-    public List<Service> getService() {
-        if (service == null) {
-            service = new ArrayList<Service>();
+    public List<ExtraService> getExtraService() {
+        if (extraService == null) {
+            extraService = new ArrayList<ExtraService>();
         }
-        return this.service;
+        return this.extraService;
     }
 
 
-    public List<Image> getImage() {
-        if (image == null) {
-            image = new ArrayList<Image>();
-        }
-        return this.image;
-    }
 
 }
