@@ -2,12 +2,9 @@ package com.megatravel.controller;
 
 
 
-import com.megatravel.agent.AccommodationDTO;
-import com.megatravel.agent.AccommodationDTO.AccommodationUnitDTO;
-import com.megatravel.agent.AccommodationDTO.AccommodationUnitDTO.ExtraServiceDTO;
-import com.megatravel.dtos.ToDTO;
-import com.megatravel.model.Accommodation;
-import com.megatravel.reservations.ReservationDTO;
+
+import com.megatravel.dtos.*;
+import com.megatravel.model.*;
 import com.megatravel.service.AccommodationService;
 import com.megatravel.service.MessageService;
 import com.megatravel.service.ReservationService;
@@ -37,35 +34,39 @@ public class AccommodationController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<AccommodationDTO>> getAllAccommodations() {
         List<Accommodation> accommodations = accomodationService.findAll();
-        List<AccommodationDTO> rentACarDTOS = new ArrayList<>();
+        List<AccommodationDTO> accommodationDTOS = new ArrayList<>();
 
-        for (Accommodation aCar : accommodations){
-            rentACarDTOS.add(ToDTO.toAccommodationUnitDTO(aCar));
+        if(accommodations.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(rentACarDTOS,HttpStatus.OK);
+
+        for (Accommodation acc : accommodations){
+            accommodationDTOS.add(new AccommodationDTO(acc));
+        }
+        return new ResponseEntity<>(accommodationDTOS,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<AccommodationDTO> getAccommodation(@PathVariable Long id) {
-        Accommodation aCar = accomodationService.findById(id);
+        Accommodation acc = accomodationService.findById(id);
 
-        if (aCar==null)
+        if (acc==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(new AccommodationDTO(aCar),HttpStatus.OK);
+        return new ResponseEntity<>(new AccommodationDTO(acc),HttpStatus.OK);
 
     }
 
     @RequestMapping(value = "/realizovana/{id}", method = RequestMethod.GET)
     public ResponseEntity<ReservationDTO> realizovana(@PathVariable Long id) {
-        Reservation aCar = reservationService.findById(id);
+        Reservation res = reservationService.findById(id);
 
-        if (aCar==null)
+        if (res==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        aCar.setStayRealized(true);
+        res.setStayRealized(true);
 
-        return new ResponseEntity<>(new ReservationDTO(aCar),HttpStatus.OK);
+        return new ResponseEntity<>(new ReservationDTO(res),HttpStatus.OK);
 
     }
 
