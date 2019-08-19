@@ -2,6 +2,7 @@ package com.megatravel.controller;
 
 import com.megatravel.dtos.AccommodationUnitDTO;
 import com.megatravel.dtos.PricingDTO;
+import com.megatravel.dtos.SearchDTO;
 import com.megatravel.model.AccommodationUnit;
 import com.megatravel.model.Pricing;
 import com.megatravel.model.Reservation;
@@ -10,6 +11,7 @@ import com.megatravel.service.AccommodationUnitService;
 import com.megatravel.service.PricingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,18 +31,18 @@ public class PricingController {
     @Autowired
     private AccommodationUnitService accommodationUnitService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<PricingDTO>> getAll() {
-        List<Pricing> accommodations = pricingService.findAll();
-        List<PricingDTO> rentACarDTOS = new ArrayList<>();
+        List<Pricing> pricings = pricingService.findAll();
+        List<PricingDTO> pricingDTOS = new ArrayList<>();
 
-        for (Pricing aCar : accommodations){
-            rentACarDTOS.add(new PricingDTO(aCar));
+        for (Pricing p : pricings){
+            pricingDTOS.add(new PricingDTO(p));
         }
-        return new ResponseEntity<>(rentACarDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<PricingDTO> getOne(@PathVariable Long id) {
 
         Pricing pricing = pricingService.findById(id);
@@ -48,7 +50,7 @@ public class PricingController {
         return new ResponseEntity<>(new PricingDTO(pricing), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/{id}",method = RequestMethod.POST,consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<PricingDTO> postaviCenu(@RequestBody PricingDTO reservationDTO, @PathVariable Long id) {
 
         Pricing pricing = new Pricing();
@@ -57,10 +59,28 @@ public class PricingController {
         AccommodationUnit unit = accommodationUnitService.findById(id);
         pricing.setPriceForUnit(unit);
         pricing.setStartDate(reservationDTO.getStartDate());
-
         pricing=pricingService.save(pricing);
 
         return new ResponseEntity<>(new PricingDTO(pricing),HttpStatus.OK);
+
+    }
+    @RequestMapping(value = "/unit/{unitId}",method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Double> getPricingForUnitForDates(@RequestBody SearchDTO searchDTO, @PathVariable(name="unitId") Long id) {
+
+        Pricing pricing = new Pricing();
+
+        Double price = pricingService.getPriceForDatesUnitId(id, searchDTO.getStartDate(), searchDTO.getEndDate());
+
+        return new ResponseEntity<>(price,HttpStatus.OK );
+
+    }
+
+    @RequestMapping(value = "/accommodation/{accId}",method = RequestMethod.POST,consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Double> getPricingForAccForDates(@RequestBody SearchDTO searchDTO, @PathVariable(name="accId") Long id) {
+
+        Double price = pricingService.getPriceForDatesAccId(id, searchDTO.getStartDate(), searchDTO.getEndDate());
+
+        return new ResponseEntity<>(price,HttpStatus.OK );
 
     }
 }

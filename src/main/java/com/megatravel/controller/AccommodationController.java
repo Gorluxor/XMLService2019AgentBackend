@@ -32,7 +32,7 @@ public class AccommodationController {
     @Autowired
     private MessageService messageService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<AccommodationDTO>> getAllAccommodations() {
         List<Accommodation> accommodations = accomodationService.findAll();
         List<AccommodationDTO> accommodationDTOS = new ArrayList<>();
@@ -47,7 +47,7 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodationDTOS,HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccommodationDTO> getAccommodation(@PathVariable Long id) {
         Accommodation acc = accomodationService.findById(id);
 
@@ -111,13 +111,13 @@ public class AccommodationController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+    @RequestMapping(method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccommodationDTO> updateAccommodation(@RequestBody AccommodationDTO accommodationDTO) {
         return null;
 
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> deleteAccommodation(@PathVariable Long id) {
         accomodationService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);

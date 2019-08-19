@@ -8,6 +8,8 @@
 
 package com.megatravel.model;
 
+import com.megatravel.dtos.PricingDTO;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -17,7 +19,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.megatravel.agent.PricingDTO;
 
 
 
@@ -46,8 +47,8 @@ public class Pricing {
     public Pricing(PricingDTO pricingDTO) {
         this.id = pricingDTO.getId();
         this.price = pricingDTO.getPrice();
-        this.startDate = pricingDTO.getStartDate().toGregorianCalendar().getTime();
-        this.lastChangedDate = pricingDTO.getLastChangedDate().toGregorianCalendar().getTime();
+        this.startDate = pricingDTO.getStartDate();
+        this.lastChangedDate = pricingDTO.getLastChangedDate();
     }
 
 

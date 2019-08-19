@@ -29,7 +29,7 @@ public class AccommodationUnitController {
     @Autowired
     private AccommodationService accommodationService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<AccommodationUnitDTO>> getAllAccommodationUnits() {
         List<AccommodationUnit> accommodations = accommodationUnitService.findAll();
         if(accommodations.isEmpty())
@@ -45,7 +45,7 @@ public class AccommodationUnitController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccommodationUnitDTO> getAccommodationUnit(@PathVariable Long id) {
         AccommodationUnit au = accommodationUnitService.findById(id);
 
@@ -100,13 +100,13 @@ public class AccommodationUnitController {
         return new ResponseEntity<>(accommodationUnitDTO1, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+    @RequestMapping(method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccommodationUnitDTO> updateAccommodationUnit(@RequestBody AccommodationUnitDTO accommodationDTO) {
         return null;
 
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> deleteAccommodationUnit(@PathVariable Long id) {
         return new ResponseEntity<>(HttpStatus.OK);
 

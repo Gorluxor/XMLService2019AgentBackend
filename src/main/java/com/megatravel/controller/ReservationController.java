@@ -1,14 +1,17 @@
 package com.megatravel.controller;
 
-import com.megatravel.model.Accommodation;
+
+import com.megatravel.dtos.AccommodationUnitDTO;
+import com.megatravel.dtos.ReservationDTO;
 import com.megatravel.model.AccommodationUnit;
 import com.megatravel.model.Reservation;
 import com.megatravel.model.User;
-import com.megatravel.reservations.ReservationDTO;
+
 import com.megatravel.service.AccommodationUnitService;
 import com.megatravel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +30,7 @@ public class ReservationController {
     @Autowired
     private AccommodationUnitService accommodationUnitService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<ReservationDTO>> getAllReservaitons() {
         List<Reservation> accommodations = reservationService.findAll();
         List<ReservationDTO> rentACarDTOS = new ArrayList<>();
@@ -38,7 +41,7 @@ public class ReservationController {
         return new ResponseEntity<>(rentACarDTOS,HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ReservationDTO> rezervisi(@RequestBody ReservationDTO reservationDTO) {
 
      //   if(reservationDTO.getArrivalDate())
