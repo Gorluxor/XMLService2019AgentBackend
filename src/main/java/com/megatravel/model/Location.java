@@ -8,6 +8,8 @@
 
 package com.megatravel.model;
 
+import com.megatravel.dtos.LocationDTO;
+
 import java.math.BigInteger;
 import java.util.Date;
 
@@ -15,8 +17,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.megatravel.types.LocationDTO;
 
 @SuppressWarnings("WeakerAccess")
 @Entity

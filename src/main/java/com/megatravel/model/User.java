@@ -9,6 +9,9 @@
 package com.megatravel.model;
 
 
+import com.megatravel.dtos.RegistrationDTO;
+import com.megatravel.dtos.UserDTO;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,8 +28,6 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.megatravel.admin.RegistrationDTO;
-import com.megatravel.admin.UserDTO;
 
 @SuppressWarnings("WeakerAccess")
 @Entity

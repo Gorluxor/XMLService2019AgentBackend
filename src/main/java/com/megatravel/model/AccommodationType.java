@@ -8,10 +8,9 @@
 
 package com.megatravel.model;
 
-import com.megatravel.agent.AccommodationDTO;
-import com.megatravel.agent.AccommodationTypeDTO;
-import com.megatravel.interfaces.*;
 
+
+import com.megatravel.dtos.AccommodationTypeDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

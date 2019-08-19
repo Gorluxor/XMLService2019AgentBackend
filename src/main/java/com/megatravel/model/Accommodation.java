@@ -1,13 +1,12 @@
 package com.megatravel.model;
 
+import com.megatravel.dtos.AccommodationDTO;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//
-//import com.megatravel.dtos.agent.AccommodationDTO;
-//import com.megatravel.model.admin.User;
-//import com.megatravel.model.types.Location;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.megatravel.agent.AccommodationDTO;
 
 
 
@@ -72,6 +70,7 @@ public class Accommodation {
         this.category = validCategory(accommodationDTO.getCategory());
         this.accommodationType = accommodationDTO.getAccommodationTypeDTO() == null ? null : new AccommodationType(accommodationDTO.getAccommodationTypeDTO());
         this.user = accommodationDTO.getUserDTO() == null ? null : new User(accommodationDTO.getUserDTO());
+        this.lastChangedDate = new Date();
     }
 
     public static String validCategory(String value){

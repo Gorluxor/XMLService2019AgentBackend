@@ -8,6 +8,8 @@
 
 package com.megatravel.model;
 
+import com.megatravel.dtos.RoleDTO;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -17,7 +19,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.megatravel.admin.RoleDTO;
 
 @Entity
 public class Role {

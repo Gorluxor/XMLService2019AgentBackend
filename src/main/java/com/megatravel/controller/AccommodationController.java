@@ -10,6 +10,7 @@ import com.megatravel.service.MessageService;
 import com.megatravel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,63 +58,58 @@ public class AccommodationController {
 
     }
 
-    @RequestMapping(value = "/realizovana/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ReservationDTO> realizovana(@PathVariable Long id) {
-        Reservation res = reservationService.findById(id);
-
-        if (res==null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        res.setStayRealized(true);
-
-        return new ResponseEntity<>(new ReservationDTO(res),HttpStatus.OK);
-
-    }
-
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<AccommodationDTO> saveAccommodation(@RequestBody AccommodationDTO accommodationDTO) {
-
-        Accommodation accommodation = new Accommodation();
-        accommodation.setAccommodationType(new AccommodationType(accommodationDTO.getAccommodationTypeDTO()));
-        List<AccommodationUnit>  unit = new ArrayList<>();
-        for(AccommodationUnitDTO e:accommodationDTO.getAccommodationUnitDTO())
-        {
-            unit.add(new AccommodationUnit(e));
-        }
-
-        accommodation.setAccommodationUnit(unit);
-        accommodation.setAccommodationType(new AccommodationType(accommodationDTO.getAccommodationTypeDTO()));
-        //accommodation.setCancelationDays(accommodationDTO.getC); TODO FIX
-        accommodation.setDescription(accommodationDTO.getDescription());
-
-        List<Image> images = new ArrayList<>();
-
-//        for(ImageDTO e: accommodationDTO.getImageDTO())
+//    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+//    public ResponseEntity<AccommodationDTO> saveAccommodation(@RequestBody AccommodationDTO accommodationDTO) {
+//
+//        Accommodation accommodation = new Accommodation();
+//        accommodation.setAccommodationType(new AccommodationType(accommodationDTO.getAccommodationTypeDTO()));
+//        List<AccommodationUnit>  unit = new ArrayList<>();
+//        for(AccommodationUnitDTO e:accommodationDTO.getAccommodationUnitDTO())
 //        {
-//            images.add(new Image(e));
-//        } TODO FIX
+//            unit.add(new AccommodationUnit(e));
+//        }
+//
+//        accommodation.setAccommodationUnit(unit);
+//        accommodation.setAccommodationType(new AccommodationType(accommodationDTO.getAccommodationTypeDTO()));
+//        //accommodation.setCancelationDays(accommodationDTO.getC); TODO FIX
+//        accommodation.setDescription(accommodationDTO.getDescription());
+//
+//        List<Image> images = new ArrayList<>();
+//
+////        for(ImageDTO e: accommodationDTO.getImageDTO())
+////        {
+////            images.add(new Image(e));
+////        } TODO FIX
+//
+//
+//       // accommodation.setImage(images);
+//
+//        accommodation.setLocation(new Location(accommodationDTO.getLocationDTO()));
+//
+//        accommodation.setName(accommodationDTO.getName());
+//        accommodation.setUser(new User(accommodationDTO.getUserDTO()));
+//
+//        List<ExtraService> services = new ArrayList<>();
+//
+//        for(Object e: accommodationDTO.getExtraServiceDTO())
+//        {
+//            services.add(new ExtraService( (ExtraServiceDTO) e)); //TODO Fix
+//        }
+//
+//        accommodation.setExtraService(services);
+//
+//        accommodation = accomodationService.save(accommodation);
+//
+//        return new ResponseEntity<>(ToDTO.toAccommodationUnitDTO(accommodation),HttpStatus.OK);
+//    }
 
 
-       // accommodation.setImage(images);
-
-        accommodation.setLocation(new Location(accommodationDTO.getLocationDTO()));
-
-        accommodation.setName(accommodationDTO.getName());
-        accommodation.setUser(new User(accommodationDTO.getUserDTO()));
-
-        List<ExtraService> services = new ArrayList<>();
-
-        for(Object e: accommodationDTO.getExtraServiceDTO())
-        {
-            services.add(new ExtraService( (ExtraServiceDTO) e)); //TODO Fix
-        } 
-
-        accommodation.setExtraService(services);
-
-        accommodation = accomodationService.save(accommodation);
-
-        return new ResponseEntity<>(ToDTO.toAccommodationUnitDTO(accommodation),HttpStatus.OK);
+    @RequestMapping(value="/create", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<AccommodationDTO> createAccommodation(@RequestBody AccommodationDTO accommodationDTO){
+        accomodationService.createAccommodation(accommodationDTO);
+        return new ResponseEntity<>(accommodationDTO, HttpStatus.CREATED);
     }
+
 
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<AccommodationDTO> updateAccommodation(@RequestBody AccommodationDTO accommodationDTO) {
@@ -123,7 +119,8 @@ public class AccommodationController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteAccommodation(@PathVariable Long id) {
-        return null;
+        accomodationService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
 
 
     }

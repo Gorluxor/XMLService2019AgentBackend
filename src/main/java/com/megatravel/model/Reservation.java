@@ -9,6 +9,8 @@
 package com.megatravel.model;
 
 
+import com.megatravel.dtos.ReservationDTO;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +24,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 
-import com.megatravel.reservations.ReservationDTO;
 
 @SuppressWarnings("WeakerAccess")
 @Entity
@@ -55,8 +56,8 @@ public class Reservation {
 
     public Reservation(ReservationDTO reservationDTO) {
         this.id = reservationDTO.getId();
-        this.arrivalDate = reservationDTO.getArrivalDate().toGregorianCalendar().getTime();
-        this.departureDate = reservationDTO.getDepartureDate().toGregorianCalendar().getTime();
+        this.arrivalDate = reservationDTO.getArrivalDate();
+        this.departureDate = reservationDTO.getDepartureDate();
         this.stayRealized = reservationDTO.isStayRealized();
         this.reservationPrice = reservationDTO.getReservationPrice();
         this.user = reservationDTO.getUserDTO() == null ? null : new User(reservationDTO.getUserDTO());

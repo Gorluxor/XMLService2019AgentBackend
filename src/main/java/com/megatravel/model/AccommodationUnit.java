@@ -8,6 +8,10 @@
 
 package com.megatravel.model;
 
+import com.megatravel.dtos.AccommodationUnitDTO;
+import com.megatravel.dtos.ImageDTO;
+import sun.util.calendar.LocalGregorianCalendar;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,8 +28,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.datatype.DatatypeFactory;
 
-import com.megatravel.agent.AccommodationUnitDTO;
-import com.megatravel.agent.ImageDTO;
+
 
 
 @SuppressWarnings("WeakerAccess")
@@ -77,8 +80,9 @@ public class AccommodationUnit {
         if (images != null){
             for (ImageDTO imageDTO : images){
                 Image im = new Image();
-                Date time = accommodationUnitDTO.getLastChangedDate().toGregorianCalendar().getTime();
-                im.lastChangedDate = imageDTO.getLastChangedDate() == null ? new Date() : time;
+                Date date;
+                date = accommodationUnitDTO.getLastChangedDate();
+                im.lastChangedDate = imageDTO.getLastChangedDate() == null ? new Date() : date;
                 im.uri = imageDTO.getUri();
                 im.title = imageDTO.getTitle();
                 values.add(im);

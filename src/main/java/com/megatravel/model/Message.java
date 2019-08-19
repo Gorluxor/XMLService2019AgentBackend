@@ -8,6 +8,8 @@
 
 package com.megatravel.model;
 
+import com.megatravel.dtos.MessageDTO;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,7 +18,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.megatravel.messages.MessageDTO;
 
 
 
@@ -53,14 +54,13 @@ public class Message {
     }
 
     public Message(MessageDTO messageDTO) {
-//        this.msg = messageDTO;
-//        this.chatRoom = messageDTO.getChatRoomDTO() == null ? null : new ChatRoom(messageDTO.getChatRoomDTO());
-//        this.receiver = new User(messageDTO.getReceiver());
-//        this.sender = new User(messageDTO.getSender());
-//        this.lastChangedDate = messageDTO.getLastChangedDate();
-//        this.timeStamp = messageDTO.getTimeStamp();
-//        this.id = messageDTO.getId();
-    	//TODO FIX
+        this.msg = messageDTO.getMsg();
+        this.chatRoom = messageDTO.getChatRoomDTO() == null ? null : new ChatRoom(messageDTO.getChatRoomDTO());
+        this.receiver = new User(messageDTO.getReceiver());
+        this.sender = new User(messageDTO.getSender());
+        this.lastChangedDate = messageDTO.getLastChangedDate();
+        this.timeStamp = messageDTO.getTimeStamp();
+        this.id = messageDTO.getId();
     }
 
 

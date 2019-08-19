@@ -8,6 +8,8 @@
 
 package com.megatravel.model;
 
+import com.megatravel.dtos.ChatRoomDTO;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,7 +18,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.megatravel.messages.ChatRoomDTO;
 
 @SuppressWarnings("WeakerAccess")
 @Entity
