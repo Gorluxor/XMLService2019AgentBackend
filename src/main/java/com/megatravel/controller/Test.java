@@ -4,12 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.megatravel.messages.MessageDTO;
-import com.megatravel.model.Message;
-import com.megatravel.interfaces.MessageServiceInterface;
-import com.megatravel.interfaces.MessageService;;
-
-
+/*
 public class Test {
 	
 	public static void main(String[] args) {
@@ -41,3 +36,4 @@ public class Test {
 	}
 
 }
+*/

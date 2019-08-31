@@ -15,7 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.megatravel.agent.UnitTypeDTO;
+import com.megatravel.dtos.UnitTypeDTO;
 
 @SuppressWarnings("WeakerAccess")
 @Entity

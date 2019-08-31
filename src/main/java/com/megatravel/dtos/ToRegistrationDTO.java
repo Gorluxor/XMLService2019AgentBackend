@@ -6,12 +6,9 @@ import java.util.GregorianCalendar;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
-import com.megatravel.admin.UserDTO;
-import com.megatravel.agent.AccommodationUnitDTO;
 import com.megatravel.model.AccommodationUnit;
 import com.megatravel.model.Reservation;
 import com.megatravel.model.User;
-import com.megatravel.reservations.ReservationDTO;
 
 public class ToRegistrationDTO {
 
@@ -21,12 +18,12 @@ public class ToRegistrationDTO {
 		SimpleDateFormat format = new SimpleDateFormat("DD/MM/YYYY HH:MM");
 		
 		
-		newObj.setArrivalDate( DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar() {{ setTime(reservation.getArrivalDate()); }}));
-		newObj.setDepartureDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar() {{ setTime(reservation.getDepartureDate()); }}));
+		newObj.setArrivalDate(reservation.getArrivalDate());
+		newObj.setDepartureDate(reservation.getDepartureDate());
 		newObj.setStayRealized(reservation.isStayRealized());
 		newObj.setReservationPrice(reservation.getReservationPrice());
 		newObj.setUserDTO( reservation.getUser() == null? null : ToDTO.toUserDTO(reservation.getUser()));
-		newObj.setLastChangedDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar() {{ setTime(reservation.getLastChangedDate()); }}));
+		newObj.setLastChangedDate(reservation.getLastChangedDate());
 //        for (AccommodationUnit au : reservation.getAccommodationUnit()){
 //            newObj.getAccommodationUnitDTO().add((Object)ToDTO.toAccommodationUnitDTO(au));
 //        }

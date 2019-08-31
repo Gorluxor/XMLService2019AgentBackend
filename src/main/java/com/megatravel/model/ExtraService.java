@@ -9,14 +9,14 @@
 package com.megatravel.model;
 
 
+import com.megatravel.dtos.ExtraServiceDTO;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.megatravel.agent.ExtraServiceDTO;
 
 
 

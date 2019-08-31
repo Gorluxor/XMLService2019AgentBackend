@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.megatravel.rating.RatingDTO;
 
 @SuppressWarnings("WeakerAccess")
 @Entity
@@ -43,16 +42,6 @@ public class Rating {
     protected Date lastChangedDate;
 
     public Rating() {
-        this.lastChangedDate = new Date();
-    }
-
-    public Rating(RatingDTO ratingDTO) {
-        this.id = ratingDTO.getId();
-        this.ratingValue = ratingDTO.getRatingValue();
-        this.adminApproved = ratingDTO.isAdminApproved();
-        this.date = new Date(ratingDTO.getDate());
-        this.user = new User(ratingDTO.getUserDTO());
-        this.reservation = new Reservation(ratingDTO.getReservationDTO());
         this.lastChangedDate = new Date();
     }
 

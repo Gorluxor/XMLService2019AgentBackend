@@ -8,6 +8,8 @@
 
 package com.megatravel.model;
 
+import com.megatravel.dtos.ImageDTO;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -15,9 +17,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import com.megatravel.agent.ImageDTO;
-
 
 
 @SuppressWarnings("WeakerAccess")
