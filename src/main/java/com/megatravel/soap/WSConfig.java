@@ -45,5 +45,15 @@ public class WSConfig {
         return client;
     }
 
+    @Bean
+    public MessageClient message(Jaxb2Marshaller marshaller) {
+        MessageClient client=new MessageClient();
+        //client.setDefaultUri("http://localhost:8081/wss/res)");
+        client.setDefaultUri("http://localhost:9999/api/message/wsss/res)");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
 
 }
