@@ -35,5 +35,15 @@ public class WSConfig {
         return client;
     }
 
+    @Bean
+    public AuthClient login(Jaxb2Marshaller marshaller) {
+        AuthClient client=new AuthClient();
+        //client.setDefaultUri("http://localhost:8081/wss/res)");
+        client.setDefaultUri("http://localhost:9999/api/auth/wss/res)");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
 
 }

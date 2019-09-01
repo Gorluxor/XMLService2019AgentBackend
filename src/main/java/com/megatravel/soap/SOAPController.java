@@ -1,9 +1,7 @@
 package com.megatravel.soap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/agent/res")
@@ -14,6 +12,9 @@ public class SOAPController {
 
     @Autowired
     ReservationClient reservationClient;
+
+    @Autowired
+    AuthClient authClient;
 
     @GetMapping(value="GetAllAccommodations")
     public GetAllAccommodationsResponse getAllReservations() {
@@ -30,5 +31,22 @@ public class SOAPController {
         return reservationClient.getAllReservations(req);
     }
 
+    @GetMapping(value="ConfirmReservation/{id}")
+    public ConfirmReservationResponse confirmReservation(@PathVariable(value="id") Long id) {
+        System.out.println("usao u ws");
+        ConfirmReservation req=new ConfirmReservation();
+        req.setReservationId(id);
+        return reservationClient.confirmReservation(req);
+    }
+
+   // @GetMapping(value="Login")
+   @RequestMapping(value="Login", method = RequestMethod.POST, consumes = "application/json")
+    public LoginResponse login(@RequestBody LoginDTO loginDTO) {
+        System.out.println("LOGIN u ws");
+       System.out.println("User " + loginDTO.getEmail());
+       Login req=new Login();
+        req.setLoginDTO(loginDTO);
+        return authClient.login(req);
+    }
 }
 
