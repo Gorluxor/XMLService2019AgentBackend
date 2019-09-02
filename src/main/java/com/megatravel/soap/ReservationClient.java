@@ -12,4 +12,8 @@ public class ReservationClient extends WebServiceGatewaySupport {
         return (ConfirmReservationResponse) getWebServiceTemplate().marshalSendAndReceive(request);
     }
 
+    public CreateReservationResponse createReservation(CreateReservation request) {
+        return (CreateReservationResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
+
 }

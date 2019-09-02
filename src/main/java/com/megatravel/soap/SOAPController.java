@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/agent/res")
 public class SOAPController {
 
@@ -26,11 +27,12 @@ public class SOAPController {
         return accommodationClient.getAllReservations(req);
     }
 
-    @GetMapping(value="GetListReservationsForAgent")
-    public GetListReservationsForAgentResponse getAllresAgent() {
+    @GetMapping(value="GetListReservationsForAgent/{email}")
+    public GetListReservationsForAgentResponse getAllresAgent(@PathVariable(value = "email") String email) {
         System.out.println("usao u ws");
+        //System.out.println("EMAIL " + email);
         GetListReservationsForAgent req=new GetListReservationsForAgent();
-        req.setEmail("agent@gmail.com");
+        req.setEmail(email);
         return reservationClient.getAllReservations(req);
     }
 
@@ -42,8 +44,17 @@ public class SOAPController {
         return reservationClient.confirmReservation(req);
     }
 
+//    @GetMapping(value="CreateReservation")
+    @RequestMapping(value="CreateReservation", method = RequestMethod.POST, consumes = "application/json")
+    public CreateReservationResponse getChatRooms(@RequestBody ReservationDTO reservationDTO) {
+        System.out.println("usao u ws");
+        CreateReservation req=new CreateReservation();
+        req.setReservationDTO(reservationDTO);
+        return reservationClient.createReservation(req);
+    }
+
    // @GetMapping(value="Login")
-   @RequestMapping(value="Login", method = RequestMethod.POST, consumes = "application/json")
+   @RequestMapping(value="Login", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public LoginResponse login(@RequestBody LoginDTO loginDTO) {
         System.out.println("LOGIN u ws");
        System.out.println("User " + loginDTO.getEmail());
@@ -68,5 +79,21 @@ public class SOAPController {
         req.setUserId(id);
         return messageClient.getListMessagesForChatRoom(req);
     }
+//////////////////////////////////////////////////////
+   // @GetMapping(value="SendMessage/{crID}")
+    @RequestMapping(value="SendMessage/{crID}", method = RequestMethod.PUT, consumes = "application/json")
+    public SendMessageResponse sendMessage(@PathVariable(value="crID") Long crID, @RequestBody MessageDTO messageDTO) {
+        System.out.println("usao u MESSAGE");
+        System.out.println("ID" + messageDTO.getReceiver().getId());
+
+        SendMessage req=new SendMessage();
+        req.setArg0(crID);
+        req.setMessageDTO(messageDTO);
+        return messageClient.sendMessage(req);
+    }
+
+    //////////////////////////////////////////
+
+
 }
 
