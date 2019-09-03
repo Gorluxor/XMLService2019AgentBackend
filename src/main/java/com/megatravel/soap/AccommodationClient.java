@@ -8,6 +8,21 @@ public class AccommodationClient extends WebServiceGatewaySupport {
         return (GetAllAccommodationsResponse) getWebServiceTemplate().marshalSendAndReceive(request);
     }
 
+    public GetAllServicesResponse getAllServices(GetAllServices request) {
+        return (GetAllServicesResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
+
+    public GetAllUnitsResponse getAllUnits(GetAllUnits request) {
+        return (GetAllUnitsResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
+
+    public GetAllUnitTypeResponse getAllUnitType(GetAllUnitType request) {
+        return (GetAllUnitTypeResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
+
+    public CreateUnitResponse createUnit(CreateUnit request) {
+        return (CreateUnitResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
 }
 
 

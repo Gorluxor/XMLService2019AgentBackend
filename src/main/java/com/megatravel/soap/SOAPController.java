@@ -94,6 +94,35 @@ public class SOAPController {
 
     //////////////////////////////////////////
 
+    @GetMapping(value="GetAllServices")
+    public GetAllServicesResponse getAllServices() {
+        System.out.println("usao u ws");
+        GetAllServices req=new GetAllServices();
+        return accommodationClient.getAllServices(req);
+    }
 
+    @GetMapping(value="GetAllUnits/{Id}")
+    public GetAllUnitsResponse getAllUnits(@PathVariable(value="Id") Long id) {
+        System.out.println("usao u ws");
+        GetAllUnits req=new GetAllUnits();
+        req.setAccId(id);
+        return accommodationClient.getAllUnits(req);
+    }
+
+    @GetMapping(value="GetAllUnitType")
+    public GetAllUnitTypeResponse getAllUnitType() {
+        System.out.println("usao u ws");
+        GetAllUnitType req=new GetAllUnitType();
+        return accommodationClient.getAllUnitType(req);
+    }
+
+    @RequestMapping(value="CreateUnit/{Id}", method = RequestMethod.POST, consumes = "application/json")
+    public CreateUnitResponse createUnit(@PathVariable(value="Id") Long id, @RequestBody AccommodationUnitDTO auDTO) {
+        System.out.println("Create Unit u ws");
+        CreateUnit req=new CreateUnit();
+        req.setAccId(id);
+        req.setAccommodationUnitDTO(auDTO);
+        return accommodationClient.createUnit(req);
+    }
 }
 
