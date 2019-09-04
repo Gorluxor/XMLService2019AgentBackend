@@ -27,6 +27,14 @@ public class SOAPController {
         return accommodationClient.getAllReservations(req);
     }
 
+    @GetMapping(value="GetAllAccommodationsForAgent/{email}")
+    public GetAllAccommodationsForAgentResponse getAllReservations(@PathVariable(value = "email") String email) {
+        System.out.println("usao u ws");
+        GetAllAccommodationsForAgent req=new GetAllAccommodationsForAgent();
+        req.setAgent(email);
+        return accommodationClient.getAllAccommodationsForAgent(req);
+    }
+
     @GetMapping(value="GetListReservationsForAgent/{email}")
     public GetListReservationsForAgentResponse getAllresAgent(@PathVariable(value = "email") String email) {
         System.out.println("usao u ws");
@@ -109,6 +117,15 @@ public class SOAPController {
         return accommodationClient.getAllUnits(req);
     }
 
+
+    @GetMapping(value="GetAllUnitsForAgent/{email}")
+    public GetAllUnitsForAgentResponse getAllUnits(@PathVariable(value="email") String email) {
+        System.out.println("usao u ws");
+        GetAllUnitsForAgent req=new GetAllUnitsForAgent();
+        req.setAgent(email);
+        return accommodationClient.getAllUnitsForAgent(req);
+    }
+
     @GetMapping(value="GetAllUnitType")
     public GetAllUnitTypeResponse getAllUnitType() {
         System.out.println("usao u ws");
@@ -123,6 +140,15 @@ public class SOAPController {
         req.setAccId(id);
         req.setAccommodationUnitDTO(auDTO);
         return accommodationClient.createUnit(req);
+    }
+
+    @RequestMapping(value="CreateUnitProsireni/{Id}", method = RequestMethod.POST, consumes = "application/json")
+    public CreateUnitProsireniResponse createUnitRespons(@PathVariable(value="Id") Long id, @RequestBody AccommodationUnitProsireniDTO auDTO) {
+        System.out.println("Create Unit u ws");
+        CreateUnitProsireni req=new CreateUnitProsireni();
+        req.setAccId(id);
+        req.setAccommodationUnitProsireniDTO(auDTO);
+        return accommodationClient.createUnitProsireni(req);
     }
 }
 

@@ -8,6 +8,10 @@ public class AccommodationClient extends WebServiceGatewaySupport {
         return (GetAllAccommodationsResponse) getWebServiceTemplate().marshalSendAndReceive(request);
     }
 
+    public GetAllAccommodationsForAgentResponse getAllAccommodationsForAgent(GetAllAccommodationsForAgent request) {
+        return (GetAllAccommodationsForAgentResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
+
     public GetAllServicesResponse getAllServices(GetAllServices request) {
         return (GetAllServicesResponse) getWebServiceTemplate().marshalSendAndReceive(request);
     }
@@ -16,12 +20,20 @@ public class AccommodationClient extends WebServiceGatewaySupport {
         return (GetAllUnitsResponse) getWebServiceTemplate().marshalSendAndReceive(request);
     }
 
+    public GetAllUnitsForAgentResponse getAllUnitsForAgent(GetAllUnitsForAgent request) {
+        return (GetAllUnitsForAgentResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
+
     public GetAllUnitTypeResponse getAllUnitType(GetAllUnitType request) {
         return (GetAllUnitTypeResponse) getWebServiceTemplate().marshalSendAndReceive(request);
     }
 
     public CreateUnitResponse createUnit(CreateUnit request) {
         return (CreateUnitResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+    }
+
+    public CreateUnitProsireniResponse createUnitProsireni(CreateUnitProsireni request) {
+        return (CreateUnitProsireniResponse) getWebServiceTemplate().marshalSendAndReceive(request);
     }
 }
 
